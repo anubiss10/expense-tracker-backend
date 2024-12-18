@@ -10,7 +10,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /ExpenseTracker/
 
 # Recolectar archivos estáticos para producción
-RUN python manage.py collectstatic --noinput
 
 # Ejecutar Gunicorn para servir el backend
 CMD ["gunicorn", "ExpenseTracker.wsgi:application", "--bind", "0.0.0.0:8000"]
