@@ -144,5 +144,7 @@ REST_FRAMEWORK = {
 }
 AUTH_USER_MODEL = 'users.CustomUser'
 
-CORS_ALLOWED_ORIGINS = [ "https://expense-tracker-frontend-xi-three.vercel.app/"
+CORS_ALLOWED_ORIGINS = [
+    "https://expense-tracker-frontend-xi-three.vercel.app"
 ]
+
