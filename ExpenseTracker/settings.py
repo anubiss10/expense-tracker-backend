@@ -26,9 +26,11 @@ SECRET_KEY = 'django-insecure-#my)=7zue$c(k$1@9q6!l#uk+qsa*=mqzw@x$zylp@o6+wq@&5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['railway.app', 'tu-dominio.com', 'localhost']
-
-
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    config('ALLOWED_HOST', default='expense-tracker-backend-production-dba5.up.railway.app'),
+]
 # Application definition
 
 INSTALLED_APPS = [
