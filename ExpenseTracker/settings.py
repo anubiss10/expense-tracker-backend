@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from decouple import config
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,10 +26,9 @@ SECRET_KEY = config('SECRET_KEY', default='unsafe-key')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    config('ALLOWED_HOST'),
+    config('ALLOWED_HOST', default='127.0.0.1').split(',')
 ]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -85,14 +85,8 @@ WSGI_APPLICATION = 'ExpenseTracker.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('PGDATABASE'),
-        'USER': config('PGUSER'),
-        'PASSWORD': config('PGPASSWORD'),
-        'HOST': config('PGHOST'),
-        'PORT': config('PGPORT', default=5432, cast=int),
-    }
+        'default': dj_database_url.config(default=config('DATABASE_URL'))
+
 }
 
 
