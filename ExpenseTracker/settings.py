@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from decouple import config
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,13 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#my)=7zue$c(k$1@9q6!l#uk+qsa*=mqzw@x$zylp@o6+wq@&5'
+SECRET_KEY = config('SECRET_KEY', default='unsafe-key')
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['railway.app', 'tu-dominio.com', 'localhost']
-
+ALLOWED_HOSTS = [
+    config('ALLOWED_HOST', default='127.0.0.1').split(',')
+]
 
 # Application definition
 
@@ -85,14 +85,8 @@ WSGI_APPLICATION = 'ExpenseTracker.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('PGDATABASE'),
-        'USER': config('PGUSER'),
-        'PASSWORD': config('PGPASSWORD'),
-        'HOST': config('PGHOST'),
-        'PORT': config('PGPORT', default=5432, cast=int),
-    }
+        'default': dj_database_url.config(default=config('DATABASE_URL'))
+
 }
 
 
@@ -145,5 +139,6 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'users.CustomUser'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "https://expense-tracker-frontend-xi-three.vercel.app"
 ]
+
