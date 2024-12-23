@@ -14,9 +14,10 @@ class Transaction(models.Model):
     transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)
     date = models.DateField()
     category = models.CharField(max_length=50)
+    receipt = models.FileField(upload_to='receipts/', blank=True, null=True)
 
     def __str__(self):
-        return f"{self.transaction_type} - {self.amount}"
+        return f"{self.transaction_type.capitalize()} - ${self.amount}"
 
     def clean(self):
         if self.amount <= 0:
